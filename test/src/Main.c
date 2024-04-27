@@ -4,13 +4,17 @@
 #include "Main.h"
 
 int main() {
-	// Create a stack with an initial allocation size for `10` `int`s:
-	MAKE_STACK(char, stack, 10, {
+	char *name = "Brahvim";
+	MAKE_STACK(char, stack, sizeof(name), {
 		puts("Failed to create the stack.\n");
 		return EXIT_FAILURE;
 	});
 
+	string_to_stack(name, stack);
+	reverse_char_stack(stack);
+	stack_to_string(name, stack);
 
+	puts(name);
 
 	// Destroy the stack when done:
 	char_stack_destroy(stack);
@@ -26,16 +30,17 @@ void reverse_char_stack(struct char_stack *p_stack) {
 }
 
 void string_to_stack(char *p_string, struct char_stack *p_stack) {
-	char c;
-	while (STACK_NO_ERROR(c = char_stack_poll(p_stack)))
-		;
-
-
-
+	for (int i = 0; i < p_stack->fits; i++)
+		char_stack_push(p_stack, p_string[i]);
 }
 
 void stack_to_string(struct char_stack *p_stack, char *p_string) {
+	char c;
+	int counter = 0;
+	while (STACK_NO_ERROR(char_stack_poll(p_stack, &c)))
+		p_string[counter++] = c;
 
+	p_string[counter] = '\0';
 }
 
 void insert_at_char_stack_bottom(struct char_stack *p_stack, char p_item) {
