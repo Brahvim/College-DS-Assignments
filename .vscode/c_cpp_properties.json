@@ -6,7 +6,7 @@
                 "${default}"
             ],
             "defines": [],
-            "cStandard": "c17",
+            "cStandard": "c23",
             "intelliSenseMode": "linux-clang-x64",
             "configurationProvider": "ms-vscode.cmake-tools"
         }
