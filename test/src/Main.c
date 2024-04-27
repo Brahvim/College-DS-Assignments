@@ -5,22 +5,22 @@
 
 int main() {
 	// Create a stack with an initial allocation size for `10` `int`s:
-	struct int_stack *stack = int_stack_create(10);
-	if (stack == NULL) {
+	struct int_stack *stack;
+	if (int_stack_create(&stack, 10) != STACK_OK) {
 		puts("Failed to create the stack.\n");
 		return EXIT_FAILURE;
 	}
 
 	// Push some elements onto the stack:
 	for (int i = 1; i < 16; ++i) {
-		if (!int_stack_push(stack, i))
+		if (int_stack_push(stack, i) != STACK_OK)
 			printf("Failed to push `%d` onto the stack.\n", i);
 		else
 			printf("Pushed `%d` onto the stack.\n", i);
 	}
 
 	// Pop elements from the stack until it's empty
-	while (int_stack_pop(stack))
+	while (int_stack_pop(stack) == STACK_OK)
 		printf("Popped an element from the stack.\n");
 
 	// Destroy the stack when done
