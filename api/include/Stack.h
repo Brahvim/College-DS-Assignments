@@ -1,8 +1,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define MAKE_STACK_OF(type)	\
-MAKE_STACK_STRUCT(type);	\
+#define MAKE_STACK_OF(type)		\
+MAKE_STACK_STRUCT(type);		\
 MAKE_STACK_METHODS(type)
 
 #define MAKE_STACK_STRUCT(type)     \
