@@ -5,23 +5,45 @@
 
 int main() {
 	// Create a stack with an initial allocation size for `10` `int`s:
-	MAKE_STACK(int, stack, 10, {
+	MAKE_STACK(char, stack, 10, {
 		puts("Failed to create the stack.\n");
 		return EXIT_FAILURE;
 	});
 
-	// Push 15,000 elements onto the stack (a lot!):
-	for (int i = 1; i < 15000; ++i) {
-		if (STACK_ERROR(int_stack_push(stack, i)))
-			printf("Failed to push `%d` onto the stack.\n", i);
-		else
-			printf("Pushed `%d` onto the stack.\n", i);
-	}
 
-	// Pop elements from the stack until it's empty:
-	while (STACK_NO_ERROR(int_stack_pop(stack)))
-		printf("Popped an element from the stack.\n");
 
 	// Destroy the stack when done:
-	int_stack_destroy(stack);
+	char_stack_destroy(stack);
+}
+
+void reverse_char_stack(struct char_stack *p_stack) {
+	if (!char_stack_is_empty(p_stack)) {
+		char temp = char_stack_pop(p_stack);
+		reverse_char_stack(p_stack);
+
+		insert_at_char_stack_bottom(p_stack, temp);
+	}
+}
+
+void string_to_stack(char *p_string, struct char_stack *p_stack) {
+	char c;
+	while (STACK_NO_ERROR(c = char_stack_poll(p_stack)))
+		;
+
+
+
+}
+
+void stack_to_string(struct char_stack *p_stack, char *p_string) {
+
+}
+
+void insert_at_char_stack_bottom(struct char_stack *p_stack, char p_item) {
+	if (char_stack_is_empty(p_stack)) {
+		char_stack_push(p_stack, p_item);
+	} else {
+		char temp = char_stack_pop(p_stack);
+		insert_at_char_stack_bottom(p_stack, p_item);
+		char_stack_push(p_stack, temp);
+	}
 }
