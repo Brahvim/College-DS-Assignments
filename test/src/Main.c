@@ -4,9 +4,12 @@
 
 #include "Main.h"
 
+#define ORIGINAL_STRING "Brahvim"
+#define ORIGINAL_STRING_SIZE sizeof(ORIGINAL_STRING) / sizeof(char)
+
 int main() {
-	char *name = calloc(8, sizeof(char));
-	strncpy(name, "Brahvim", 8);
+	char *name = calloc(ORIGINAL_STRING_SIZE, sizeof(char));
+	strncpy(name, "Brahvim", ORIGINAL_STRING_SIZE);
 
 	MAKE_STACK(char, stack, sizeof(name), {
 		puts("Failed to create the stack.\n");
@@ -20,9 +23,7 @@ int main() {
 	stack_to_string(stack, reversed);
 
 	puts("Reversed string:");
-
-	for (size_t i = 7; i > 0; --i)
-		putc(reversed[i], stdout);
+	printf("%s", reversed + sizeof(char));
 
 	free(reversed);
 
@@ -30,13 +31,15 @@ int main() {
 	char_stack_destroy(stack);
 }
 
-void reverse_char_stack(struct char_stack *p_stack) {
-	if (!char_stack_is_empty(p_stack)) {
-		char temp = char_stack_pop(p_stack);
-		reverse_char_stack(p_stack);
+int char_compare_fxn(const void *p_first, const void *p_second) {
+	const int result = (int)(p_first - p_second);
+	return result < 0 ? -1 :
+		result == 0 ? 0 : 1;
+	// return p_first - p_second;
+}
 
-		insert_at_char_stack_bottom(p_stack, temp);
-	}
+void reverse_char_stack(struct char_stack *p_stack) {
+	qsort(p_stack->array, p_stack->fits, sizeof(char), char_compare_fxn);
 }
 
 void string_to_stack(char *p_string, struct char_stack *p_stack) {
@@ -45,24 +48,10 @@ void string_to_stack(char *p_string, struct char_stack *p_stack) {
 }
 
 void stack_to_string(struct char_stack *p_stack, char *p_string) {
-
-
-
-
 	char c;
 	int counter = 0;
 	while (STACK_NO_ERROR(char_stack_poll(p_stack, &c)))
 		p_string[counter++] = c;
 
 	p_string[counter] = '\0';
-}
-
-void insert_at_char_stack_bottom(struct char_stack *p_stack, char p_item) {
-	if (char_stack_is_empty(p_stack)) {
-		char_stack_push(p_stack, p_item);
-	} else {
-		char temp = char_stack_pop(p_stack);
-		insert_at_char_stack_bottom(p_stack, p_item);
-		char_stack_push(p_stack, temp);
-	}
 }
