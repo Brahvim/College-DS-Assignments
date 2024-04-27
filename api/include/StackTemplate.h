@@ -18,13 +18,13 @@ struct type##_stack {               \
 #define DEFINE_STACK_METHODS(type)																		\
 type type##_stack_peek(struct type##_stack *stack);														\
 																										\
-type type##_stack_poll(struct type##_stack *stack);														\
-																										\
 void type##_stack_destroy(struct type##_stack *stack);													\
 																										\
 bool type##_stack_is_empty(struct type##_stack *stack);													\
 																										\
 stack_status type##_stack_pop(struct type##_stack *stack);												\
+																										\
+stack_status type##_stack_poll(struct type##_stack *stack, type *out);									\
 																										\
 stack_status type##_stack_push(struct type##_stack *stack, const type element);							\
 																										\
@@ -35,12 +35,6 @@ DEFINE_STACK_METHODS(type)                                                      
 																										\
 type type##_stack_peek(struct type##_stack *stack) {                                         			\
     return stack->array[stack->top];																	\
-}                                                                                                   	\
-																										\
-type type##_stack_poll(struct type##_stack *stack) {                                         			\
-    const type to_ret = type##_stack_peek(stack);														\
-    type##_stack_pop(stack);																			\
-	return to_ret;																						\
 }                                                                                                   	\
                                                                                                     	\
 void type##_stack_destroy(struct type##_stack *stack) {                                             	\
@@ -59,6 +53,11 @@ stack_status type##_stack_pop(struct type##_stack *stack) {                     
     (stack->top)--;                                                                                 	\
     return STACK_OK;                                                                                	\
 }																										\
+																										\
+stack_status type##_stack_poll(struct type##_stack *stack, type *out) {                                 \
+    *out = type##_stack_peek(stack);																	\
+    return type##_stack_pop(stack);																		\
+}                                                                                                   	\
 																										\
 stack_status type##_stack_push(struct type##_stack *stack, const type element) {                    	\
         if (stack->top >= stack->fits) {                                                        		\
