@@ -12,14 +12,14 @@ int main() {
 
 	// Push 15,000 elements onto the stack (a lot!):
 	for (int i = 1; i < 15000; ++i) {
-		if (int_stack_push(stack, i) != STACK_OK)
+		if (STACK_ERROR(int_stack_push(stack, i)))
 			printf("Failed to push `%d` onto the stack.\n", i);
 		else
 			printf("Pushed `%d` onto the stack.\n", i);
 	}
 
 	// Pop elements from the stack until it's empty:
-	while (int_stack_pop(stack) == STACK_OK)
+	while (STACK_NO_ERROR(int_stack_pop(stack)))
 		printf("Popped an element from the stack.\n");
 
 	// Destroy the stack when done:
