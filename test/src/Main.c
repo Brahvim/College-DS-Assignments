@@ -4,31 +4,38 @@
 
 #include "Main.h"
 
-#define ORIGINAL_STRING "Brahvim"
-#define ORIGINAL_STRING_SIZE sizeof(ORIGINAL_STRING) / sizeof(char)
+#define ORIGINAL_STRING ((char*)"Brahvim")
+#define ORIGINAL_STRING_SIZE (sizeof(ORIGINAL_STRING) * sizeof(char))
+#define ORIGINAL_STRING_LENGTH (sizeof(ORIGINAL_STRING) / sizeof(char))
 
 int main() {
-	char *name = calloc(ORIGINAL_STRING_SIZE, sizeof(char));
-	strncpy(name, "Brahvim", ORIGINAL_STRING_SIZE);
-
-	MAKE_STACK(char, stack, sizeof(name), {
-		puts("Failed to create the stack.\n");
+	MAKE_STACK(char, stack, ORIGINAL_STRING_SIZE, {
+		puts("Failed to allocate for `stack`.\n");
 		return EXIT_FAILURE;
 	});
 
-	char *reversed = calloc(8, sizeof(char));
+	MAKE_STACK(char, reversed_stack, ORIGINAL_STRING_SIZE, {
+		puts("Failed to allocate for `reversed_stack`.\n");
+		return EXIT_FAILURE;
+	});
 
-	string_to_stack(name, stack);
-	reverse_char_stack(stack);
-	stack_to_string(stack, reversed);
+	char *reversed_string = malloc(ORIGINAL_STRING_SIZE);
+
+	string_to_stack(ORIGINAL_STRING, stack);
+
+	char c;
+	while (STACK_NO_ERROR(char_stack_poll(stack, &c)))
+		char_stack_push(reversed_stack, c);
+
+	stack_to_string(reversed_stack, reversed_string);
 
 	puts("Reversed string:");
-	printf("%s", reversed + sizeof(char));
+	printf("%s", reversed_string);
 
-	free(reversed);
-
-	// Destroy the stack when done:
+	// No leaks here!:
+	free(reversed_string);
 	char_stack_destroy(stack);
+	char_stack_destroy(reversed_stack);
 }
 
 int char_compare_fxn(const void *p_first, const void *p_second) {
@@ -36,10 +43,6 @@ int char_compare_fxn(const void *p_first, const void *p_second) {
 	return result < 0 ? -1 :
 		result == 0 ? 0 : 1;
 	// return p_first - p_second;
-}
-
-void reverse_char_stack(struct char_stack *p_stack) {
-	qsort(p_stack->array, p_stack->fits, sizeof(char), char_compare_fxn);
 }
 
 void string_to_stack(char *p_string, struct char_stack *p_stack) {
