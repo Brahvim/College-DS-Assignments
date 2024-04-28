@@ -16,30 +16,42 @@ struct type##_stack {               \
 }
 
 #define MAKE_STACK_METHODS(type)                                                                    	\
-type type##_stack_peek(struct type##_stack *stack) {                                         			\
-    return stack->array[stack->top];																	\
-}                                                                                                   	\
-                                                                                                    	\
 void type##_stack_destroy(struct type##_stack *stack) {                                             	\
 		if (stack != NULL)                                                                          	\
 	        free(stack);                                                                            	\
 }                                                                                                   	\
 																										\
 bool type##_stack_is_empty(struct type##_stack *stack) {												\
-	return stack->top <= 1;																				\
+	return stack->top < 1;																				\
 }																										\
 																										\
 stack_status type##_stack_pop(struct type##_stack *stack) {                                         	\
-    if (stack->top < 1)                                                                             	\
-        return STACK_UNDERFLOW;                                                                     	\
+    if (type##_stack_is_empty(stack))                                                                   \
+        return STACK_EMPTY;                                                                     		\
                                                                                                     	\
-    (stack->top)--;                                                                                 	\
+    --(stack->top);                                                                                 	\
     return STACK_OK;                                                                                	\
 }																										\
-																										\
+                                                                                                    	\
+stack_status type##_stack_peek(struct type##_stack *stack, type *out) {                                 \
+	if (type##_stack_is_empty(stack)) {																	\
+		out = NULL;																						\
+		return STACK_EMPTY;																				\
+	}																									\
+                                                                                                   		\
+    *out = stack->array[stack->top];																	\
+	return STACK_OK;																					\
+}                                                                                                   	\
+                                                                                                    	\
 stack_status type##_stack_poll(struct type##_stack *stack, type *out) {                                 \
-    *out = type##_stack_peek(stack);																	\
-    return type##_stack_pop(stack);																		\
+	if (type##_stack_is_empty(stack)) {																	\
+		out = NULL;																						\
+		return STACK_EMPTY;																				\
+	}                                                                                                   \
+                                                                                                    	\
+    --(stack->top);																						\
+    *out = stack->array[stack->top];																	\
+    return STACK_OK;																					\
 }                                                                                                   	\
 																										\
 stack_status type##_stack_push(struct type##_stack *stack, const type element) {                    	\
@@ -52,8 +64,7 @@ stack_status type##_stack_push(struct type##_stack *stack, const type element) {
 																										\
 		stack->fits = new_size;                                                             			\
 		stack->array = new_array;                                                           			\
-	} else                                                                                           	\
-		return STACK_OVERFLOW;																			\
+	}                                                                                            		\
 																										\
 	stack->array[stack->top++] = element;                                                       		\
 	return STACK_OK;   																					\
@@ -69,7 +80,7 @@ stack_status type##_stack_create(struct type##_stack **out_stack, size_t initial
 	stack->array = calloc(initial_allocation_size, sizeof(type));                              			\
 																										\
 	if (stack->array == NULL)																			\
-		return STACK_MALLOC;                                                                        	\
+		return STACK_BACK_MALLOC;                                                                       \
 																										\
 		*out_stack = stack;																				\
 																										\
