@@ -18,6 +18,8 @@ int main() {
 			printf("Pushed `%d` onto the stack.\n", i);
 	}
 
+	puts("\nPushed it all!\n");
+
 	// Pop elements from the stack until it's empty:
 	{
 		int i;
