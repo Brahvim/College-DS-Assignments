@@ -43,19 +43,20 @@ stack_status type##_stack_poll(struct type##_stack *stack, type *out) {         
 }                                                                                                   	\
 																										\
 stack_status type##_stack_push(struct type##_stack *stack, const type element) {                    	\
-        if (stack->top >= stack->fits) {                                                        		\
-			const size_t new_size = stack->fits * 2;													\
-			type *new_array = realloc(stack->array, new_size * sizeof(type));                			\
-            																							\
-			if (new_array == NULL)                                                                		\
-                return STACK_MALLOC;                                                              		\
+	if (stack->fits >= stack->top) {                                                        			\
+		const size_t new_size = stack->fits * 2;														\
+		type *new_array = realloc(stack->array, new_size * sizeof(type));                				\
 																										\
-			stack->fits = new_size;                                                             		\
-			stack->array = new_array;                                                           		\
-        }                                                                                           	\
-                                                                                                    	\
-        stack->array[stack->top++] = element;                                                       	\
-        return STACK_OK;   																				\
+		if (new_array == NULL)                                                                			\
+			return STACK_MALLOC;                                                              			\
+																										\
+		stack->fits = new_size;                                                             			\
+		stack->array = new_array;                                                           			\
+	} else                                                                                           	\
+		return STACK_OVERFLOW;																			\
+																										\
+	stack->array[stack->top++] = element;                                                       		\
+	return STACK_OK;   																					\
 }                                                                                                   	\
                                                                                                     	\
 stack_status type##_stack_create(struct type##_stack **out_stack, size_t initial_allocation_size) {		\
