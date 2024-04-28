@@ -1,3 +1,4 @@
+#pragma once
 #include <stdlib.h>
 #include <stdbool.h>
 
@@ -14,25 +15,7 @@ struct type##_stack {               \
                                     \
 }
 
-// Most painful solution to allow me to define these functions in this order of "signature length":
-#define DECLARE_STACK_METHODS(type)																		\
-type type##_stack_peek(struct type##_stack *stack);														\
-																										\
-void type##_stack_destroy(struct type##_stack *stack);													\
-																										\
-bool type##_stack_is_empty(struct type##_stack *stack);													\
-																										\
-stack_status type##_stack_pop(struct type##_stack *stack);												\
-																										\
-stack_status type##_stack_poll(struct type##_stack *stack, type *out);									\
-																										\
-stack_status type##_stack_push(struct type##_stack *stack, const type element);							\
-																										\
-stack_status type##_stack_create(struct type##_stack **out_stack, size_t initial_allocation_size);
-
 #define MAKE_STACK_METHODS(type)                                                                    	\
-DECLARE_STACK_METHODS(type)                                                                    			\
-																										\
 type type##_stack_peek(struct type##_stack *stack) {                                         			\
     return stack->array[stack->top];																	\
 }                                                                                                   	\

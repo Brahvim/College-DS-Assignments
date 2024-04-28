@@ -5,7 +5,7 @@
 
 int main() {
 	// Create a stack with an initial allocation size for `10` `int`s:
-	MAKE_STACK(int, stack, 10, {
+	MAKE_STACK_HANDLING_ALL(int, stack, 10, {
 		puts("Failed to create the stack.\n");
 		return EXIT_FAILURE;
 	});
