@@ -34,20 +34,16 @@ stack_status type##_stack_pop(struct type##_stack *stack) {                     
 }																										\
                                                                                                     	\
 stack_status type##_stack_peek(struct type##_stack *stack, type *out) {                                 \
-	if (type##_stack_is_empty(stack)) {																	\
-		out = NULL;																						\
+	if (type##_stack_is_empty(stack)) 																	\
 		return STACK_EMPTY;																				\
-	}																									\
                                                                                                    		\
     *out = stack->array[stack->top];																	\
 	return STACK_OK;																					\
 }                                                                                                   	\
                                                                                                     	\
 stack_status type##_stack_poll(struct type##_stack *stack, type *out) {                                 \
-	if (type##_stack_is_empty(stack)) {																	\
-		out = NULL;																						\
+	if (type##_stack_is_empty(stack)) 																	\
 		return STACK_EMPTY;																				\
-	}                                                                                                   \
                                                                                                     	\
     --(stack->top);																						\
     *out = stack->array[stack->top];																	\
