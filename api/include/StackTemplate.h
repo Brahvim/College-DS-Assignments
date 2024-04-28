@@ -43,7 +43,7 @@ stack_status type##_stack_poll(struct type##_stack *stack, type *out) {         
 }                                                                                                   	\
 																										\
 stack_status type##_stack_push(struct type##_stack *stack, const type element) {                    	\
-	if (stack->fits >= stack->top) {                                                        			\
+	if (stack->top >= stack->fits) {                                                        			\
 		const size_t new_size = stack->fits * 2;														\
 		type *new_array = realloc(stack->array, new_size * sizeof(type));                				\
 																										\
