@@ -22,5 +22,5 @@ add_executable(
   CollegeDsAssignments ${api_header_hpp_files} ${test_header_hpp_files}
                        ${api_source_cpp_files} ${test_source_cpp_files})
 
-target_compile_options(CollegeDsAssignments PUBLIC "-save-temps")
+target_compile_options(CollegeDsAssignments PUBLIC "-save-temps" "-O0")
 target_compile_features(CollegeDsAssignments PUBLIC c_std_23)
