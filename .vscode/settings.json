@@ -15,6 +15,7 @@
         "utility": "c",
         "stack.h": "c",
         "stackstatus.h": "c",
-        "stdio.h": "c"
+        "stdio.h": "c",
+        "typeinfo": "c"
     }
 }

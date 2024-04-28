@@ -1,7 +1,5 @@
 #pragma once
-#include "StackUtils.h"
-#include "StackStatus.h"
-#include "StackTemplate.h"
+#include "Stack.h"
 
 MAKE_STACK_STRUCT(char);
 MAKE_STACK_METHODS(char);
