@@ -52,7 +52,8 @@ stack_status type##_stack_push(struct type##_stack *stack, const type element) {
 																										\
 		stack->fits = new_size;                                                             			\
 		stack->array = new_array;                                                           			\
-	}                                                                                           		\
+	} else                                                                                           	\
+		return STACK_OVERFLOW;																			\
 																										\
 	stack->array[stack->top++] = element;                                                       		\
 	return STACK_OK;   																					\
