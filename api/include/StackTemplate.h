@@ -15,7 +15,7 @@ struct type##_stack {               \
 }
 
 // Most painful solution to allow me to define these functions in this order of "signature length":
-#define DEFINE_STACK_METHODS(type)																		\
+#define DECLARE_STACK_METHODS(type)																		\
 type type##_stack_peek(struct type##_stack *stack);														\
 																										\
 void type##_stack_destroy(struct type##_stack *stack);													\
@@ -31,7 +31,7 @@ stack_status type##_stack_push(struct type##_stack *stack, const type element);	
 stack_status type##_stack_create(struct type##_stack **out_stack, size_t initial_allocation_size);
 
 #define MAKE_STACK_METHODS(type)                                                                    	\
-DEFINE_STACK_METHODS(type)                                                                    			\
+DECLARE_STACK_METHODS(type)                                                                    			\
 																										\
 type type##_stack_peek(struct type##_stack *stack) {                                         			\
     return stack->array[stack->top];																	\
