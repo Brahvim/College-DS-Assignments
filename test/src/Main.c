@@ -9,12 +9,12 @@
 #define ORIGINAL_STRING_LENGTH (sizeof(ORIGINAL_STRING) / sizeof(char))
 
 int main() {
-	MAKE_STACK(char, stack, ORIGINAL_STRING_SIZE, {
+	MAKE_STACK_HANDLING_ALL(char, stack, ORIGINAL_STRING_SIZE, {
 		puts("Failed to allocate for `stack`.\n");
 		return EXIT_FAILURE;
 	});
 
-	MAKE_STACK(char, reversed_stack, ORIGINAL_STRING_SIZE, {
+	MAKE_STACK_HANDLING_ALL(char, reversed_stack, ORIGINAL_STRING_SIZE, {
 		puts("Failed to allocate for `reversed_stack`.\n");
 		return EXIT_FAILURE;
 	});
