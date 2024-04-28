@@ -1,5 +1,5 @@
-#define STACK_ERROR(x) (x != STACK_OK)
-#define STACK_NO_ERROR(x) (x == STACK_OK)
+#define STACK_ERROR(x) ((x) != STACK_OK)
+#define STACK_NO_ERROR(x) ((x) == STACK_OK)
 
 #define MAKE_STACK_HANDLING_ALL(type, name, initial_allocation_size, error_code_block)									\
 	MAKE_STACK_HANDLING_EACH(type, name, initial_allocation_size, error_code_block, { free(name); } error_code_block)
