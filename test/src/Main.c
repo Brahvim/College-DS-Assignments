@@ -14,31 +14,15 @@ int main() {
 		return EXIT_FAILURE;
 	});
 
-	// MAKE_STACK_HANDLING_ALL(char, reversed_stack, ORIGINAL_STRING_SIZE, {
-	// 	puts("Failed to allocate for `reversed_stack`.\n");
-	// 	return EXIT_FAILURE;
-	// });
-
 	string_to_stack(ORIGINAL_STRING, stack);
-
-	// char c;
-	// stack_status s;
-	// while (STACK_NO_ERROR(s = char_stack_poll(stack, &c))) {
-	// 	printf("Character read: `%c`\n", c);
-	// 	printf("Poll state: `%d`\n", s);
-	// 	s = char_stack_push(reversed_stack, c);
-	// 	printf("Push state: `%d`\n", s);
-	// }
 
 	char *reversed_string = malloc(ORIGINAL_STRING_SIZE);
 	stack_to_string(stack, reversed_string);
-	// stack_to_string(reversed_stack, reversed_string);
 	printf("Reversed string: \"%s\"\n", reversed_string);
 
 	// No leaks here!:
 	free(reversed_string);
 	char_stack_destroy(stack);
-	// char_stack_destroy(reversed_stack);
 }
 
 void string_to_stack(const char *p_string, struct char_stack *p_stack) {
