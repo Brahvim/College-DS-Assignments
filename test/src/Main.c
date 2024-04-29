@@ -5,9 +5,10 @@
 #include "Main.h"
 
 int main() {
+	const size_t uin_len;
 	printf("Please enter the string to reverse: ");
-	const char *uin = read_line(5);
-	const int uin_len = 1 + strlen(uin); // FlawFinder: Ignore.
+	const char *uin = read_line(5, (size_t*)&uin_len);
+	(*(size_t*)(&uin_len)) += 1;
 
 	MAKE_STACK_HANDLING_ALL(char, stack, uin_len, {
 		puts("Failed to allocate for `stack`.\n");
@@ -35,7 +36,7 @@ void clear_stdin(void) {
 		;													// Just trying to clear a buffer, dear linter.
 }
 
-char* read_line(const size_t p_factor) {
+char* read_line(const size_t p_factor, size_t *p_out_size) {
 	size_t size = 5; // ...Buffer's current size?
 	size_t read_size = 0; // How filled is the buffer?!
 	char *line = malloc(size);
@@ -61,6 +62,9 @@ char* read_line(const size_t p_factor) {
 			line = reallocated;
 		}
 	}
+
+	// Tell 'em the size. TELL 'EM!:
+	*p_out_size = read_size;
 
 	// We re-allocate to make sure we have a string of the perfect size:
 	line = realloc(line, read_size + 1);
