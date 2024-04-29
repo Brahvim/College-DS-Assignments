@@ -10,8 +10,8 @@ int main() {
 		exit(EXIT_FAILURE);
 	});
 
-	// Push 15,000 elements onto the stack (a lot!):
-	for (int i = 1; i <= 15; ++i) {
+	// Push `500` elements onto the stack:
+	for (int i = 1; i <= 500; ++i) {
 		if (STACK_ERROR(int_stack_push(stack, i)))
 			printf("Failed to push `%d` onto the stack.\n", i);
 		else
@@ -21,11 +21,8 @@ int main() {
 	puts("\nPushed it all!\n");
 
 	// Pop elements from the stack until it's empty:
-	{
-		int i;
-		while (STACK_NO_ERROR(int_stack_poll(stack, &i)))
-			printf("Popped `%d` from the stack.\n", i);
-	}
+	for (int i; STACK_NO_ERROR(int_stack_poll(stack, &i));)
+		printf("Popped `%d` from the stack.\n", i);
 
 	// Destroy the stack when done:
 	int_stack_destroy(stack);
