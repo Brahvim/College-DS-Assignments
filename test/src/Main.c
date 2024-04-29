@@ -9,6 +9,11 @@ int main() {
 		puts("Failed to allocate for `stack`...\n");
 		exit(EXIT_FAILURE);
 	});
+
+	const size_t expr_len;
+	const char *expr = read_line(5, (size_t*)&expr_len);
+
+	printf("Expression length: `%zu`.\n", expr_len);
 }
 
 /**
@@ -21,7 +26,7 @@ void clear_stdin(void) {
 		;													// Just trying to clear a buffer, dear linter.
 }
 
-char* read_line(const size_t p_factor) {
+char* read_line(const size_t p_factor, size_t *p_out_size) {
 	size_t size = 5; // ...Buffer's current size?
 	size_t read_size = 0; // How filled is the buffer?!
 	char *line = malloc(size);
@@ -47,6 +52,9 @@ char* read_line(const size_t p_factor) {
 			line = reallocated;
 		}
 	}
+
+	// Tell 'em the size. TELL 'EM!:
+	*p_out_size = read_size;
 
 	// We re-allocate to make sure we have a string of the perfect size:
 	line = realloc(line, read_size + 1);
