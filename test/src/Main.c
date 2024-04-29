@@ -5,10 +5,10 @@
 #include "Main.h"
 
 int main() {
-	const size_t uin_len;
+	size_t uin_len;
 	printf("Please enter the string to reverse: ");
-	const char *uin = read_line(5, (size_t*)&uin_len);
-	(*(size_t*)(&uin_len)) += 1;
+	const char *uin = read_line(5, &uin_len);
+	++uin_len;
 
 	MAKE_STACK_HANDLING_ALL(char, stack, uin_len, {
 		puts("Failed to allocate for `stack`.\n");
