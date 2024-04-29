@@ -5,15 +5,49 @@
 #include "Main.h"
 
 int main() {
+	size_t expr_len;
+	const char *expr = read_line(5, &expr_len);
+	++expr_len;
+
+	printf("Expression length: `%zu`.\n", expr_len);
+
 	MAKE_STACK_HANDLING_ALL(char, stack, 0, {
 		puts("Failed to allocate for `stack`...\n");
 		exit(EXIT_FAILURE);
 	});
 
-	const size_t expr_len;
-	const char *expr = read_line(5, (size_t*)&expr_len);
+	double result = 0;
+	for (size_t i = 0; i < expr_len; ++i) {
+		const unsigned char c = expr[i];
 
-	printf("Expression length: `%zu`.\n", expr_len);
+		// `47` is `'0'`, and `57` is `'9'`:
+		if (c > 47 && c < 58) {
+			// ...We have a number.
+		} else // ...We have some operand.
+			switch (c) {
+				case POSTFIX_ADD: {
+				}
+
+				case POSTFIX_DIVIDE: {
+				}
+
+				case POSTFIX_MODULO: {
+				}
+
+				case POSTFIX_MULTIPLY: {
+				}
+
+				case POSTFIX_SUBTRACT: {
+				}
+
+				default: {
+					puts("Ooops! Encountered unknown character! Exiting now...");
+					exit(EXIT_FAILURE);
+				}
+			}
+	}
+
+	printf("Result: `%lf`.\n", result);
 }
 
 /**
