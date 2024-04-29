@@ -26,19 +26,19 @@ int main() {
 		} else // ...We have some operand.
 			switch (c) {
 				case POSTFIX_ADD: {
-				}
+				} break;
 
 				case POSTFIX_DIVIDE: {
-				}
+				} break;
 
 				case POSTFIX_MODULO: {
-				}
+				} break;
 
 				case POSTFIX_MULTIPLY: {
-				}
+				} break;
 
 				case POSTFIX_SUBTRACT: {
-				}
+				} break;
 
 				default: {
 					puts("Ooops! Encountered unknown character! Exiting now...");
