@@ -60,11 +60,11 @@ int main() {
 						result += n1 / n2;
 				} break;
 
-				case POSTFIX_MODULO: { // Kinda' don't wanna allow this one.
-					// signed long long int n1_rounded = round(n1);
-					// if (n1_rounded == n1)
-					// 	result += (n1 % n2);
-				} break;
+								   // case POSTFIX_MODULO: { // Kinda' don't wanna allow this one.
+									   // signed long long int n1_rounded = round(n1);
+									   // if (n1_rounded == n1)
+									   // 	result += (n1 % n2);
+								   // } break;
 
 				case POSTFIX_MULTIPLY: {
 					result += n1 * n2;
