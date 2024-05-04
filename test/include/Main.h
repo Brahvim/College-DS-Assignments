@@ -9,11 +9,8 @@ typedef enum {
     POSTFIX_SUBTRACT = '-',
 } postfix_operation;
 
-typedef char expr_char_t;
-
-MAKE_STACK_OF(char);
 MAKE_STACK_OF(double);
-// MAKE_STACK_OF(expr_char_t);
+typedef char expr_char_t;
 
 /**
  * [ https://stackoverflow.com/questions/52984551/using-fgets-with-realloc ],
