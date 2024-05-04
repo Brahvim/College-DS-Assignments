@@ -71,7 +71,7 @@ stack_status type##_stack_create(struct type##_stack **out_stack, size_t initial
 	if (stack == NULL)																					\
 		return STACK_MALLOC;																			\
 																										\
-	if (initial_allocation_size < 0)																	\
+	if (initial_allocation_size < 1)																	\
 		initial_allocation_size = 1;																	\
 																										\
 	stack->top = 0;                                                      								\
