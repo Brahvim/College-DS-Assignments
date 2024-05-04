@@ -1,5 +1,7 @@
 #pragma once
+
 #include "Stack.h"
+#include "ReadLine.h"
 
 typedef enum {
     POSTFIX_ADD = '+',
@@ -9,13 +11,15 @@ typedef enum {
     POSTFIX_SUBTRACT = '-',
 } postfix_operation;
 
+const int g_postfix_operations[4] = {
+    POSTFIX_ADD,
+    POSTFIX_DIVIDE,
+    POSTFIX_MULTIPLY,
+    POSTFIX_SUBTRACT,
+};
+
 MAKE_STACK_OF(double);
 typedef char expr_char_t;
 
-/**
- * [ https://stackoverflow.com/questions/52984551/using-fgets-with-realloc ],
- * [ https://github.com/Brahvim/College-C-Assignments/blob/26934f9777473ebb2a759f2f17f9715820ffa46f/ReadLine.c#L7 ].
- */
-void clear_stdin(void);
-// ...I modified this one:
-char* read_line(const size_t factor, size_t *out_size);
+// Program-specific stuff:
+void postfix_evaluator_error(const size_t p_error_char_id, const char *p_error_message);

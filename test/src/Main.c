@@ -7,13 +7,16 @@
 #include "Main.h"
 
 int main() {
-	puts("Please enter your postfix expression.");
+	puts("Welcome to the literals postfix expression evaluator.");
+	puts("Supported operators include:");
+	for (size_t i = 0; i < 4; i++)
+		printf("%zu. `%c`.\n", i, g_postfix_operations[i]);
+
+	puts("Please enter your postfix expression below:");
 
 	size_t expr_len = 0;
 	expr_char_t *expr = read_line(5, &expr_len);
 	++expr_len;
-
-	printf("Expression length: `%zu`.\n", expr_len);
 
 	MAKE_STACK_HANDLING_ALL(double, operand_stack, 0, {
 		puts("Failed to allocate for `operand_stack`...\n");
@@ -21,7 +24,7 @@ int main() {
 	});
 
 	expr_char_t c = 0;
-	double result = 0;
+	// double result = 0;
 	size_t expr_chars_processed = 0;
 
 	for (expr_char_t *expr_char_ptr = expr; (c = *expr_char_ptr) != '\0'; expr_char_ptr += sizeof(expr_char_t)) {
@@ -38,42 +41,46 @@ int main() {
 			if (operand_stack->top < 2) { // Error!
 				puts("Hey! A postfix expression requires at least two operands (numbers) before an operator!");
 				puts("Your expression may be erroneous.");
-				printf("%s", expr_char_ptr);
+				printf("%s\n", expr_char_ptr);
 
 				// Tell them where the issue in their expression is!
-				for (size_t i = 0; i < expr_chars_processed; i++)
+				for (size_t i = -1; i < expr_chars_processed; i++)
 					putc(' ', stdout);
 
-				puts("\n^");
-				puts(" (Erroneous operator).");
+				puts("^");
+				puts("(Erroneous operator).");
+				exit(EXIT_FAILURE);
 			}
 
+			double result = 0;
 			double n1 = 0, n2 = 0;
 			double_stack_poll(operand_stack, &n1);
 			double_stack_poll(operand_stack, &n2);
 
 			switch (c) {
 				case POSTFIX_ADD: {
-					result += n1 + n2;
+					result = n1 + n2;
 				} break;
 
 				case POSTFIX_DIVIDE: {
-					if (!(n1 == 0 || n2 == 0))
-						result += n1 / n2;
+					if (n1 == 0 || n2 == 0) {
+					}
+
+					result = n1 / n2;
 				} break;
 
-								   // case POSTFIX_MODULO: { // Kinda' don't wanna allow this one.
-									   // signed long long int n1_rounded = round(n1);
-									   // if (n1_rounded == n1)
-									   // 	result += (n1 % n2);
-								   // } break;
+								   //    case POSTFIX_MODULO: { // Kinda' don't wanna allow this one.
+								   // 		signed long long int n1_rounded = round(n1);
+								   // 		if (n1_rounded == n1)
+								   // 			result = (n1 % n2);
+								   //    } break;
 
 				case POSTFIX_MULTIPLY: {
-					result += n1 * n2;
+					result = n1 * n2;
 				} break;
 
 				case POSTFIX_SUBTRACT: {
-					result += n1 * n2;
+					result = n1 - n2;
 				} break;
 
 				default: {
@@ -81,59 +88,30 @@ int main() {
 					exit(EXIT_FAILURE);
 				}
 			}
+
+			double_stack_push(operand_stack, result);
 		}
 
 		++expr_chars_processed;
 	}
+
+	double result;
+	double_stack_poll(operand_stack, &result);
 
 	free(expr);
 	printf("Result: `%lf`.\n", result);
 	double_stack_destroy(operand_stack);
 }
 
-/**
- * [ https://stackoverflow.com/questions/52984551/using-fgets-with-realloc ],
- * [ https://github.com/Brahvim/College-C-Assignments/blob/26934f9777473ebb2a759f2f17f9715820ffa46f/ReadLine.c#L7 ].
- */
-void clear_stdin(void) {
-	// Correction from last semester's version - I should've used an `int`!
-	for (int c; !((c = getchar()) == '\n' || c == EOF);)	// FlawFinder: Ignore. Why? Because I don't know any boundary either!
-		;													// Just trying to clear a buffer, dear linter.
+#pragma region // Program-specific stuff.
+void postfix_evaluator_error(const size_t p_error_char_id, const char *p_error_message) {
+	// printf("%s\n", expr);
+	// Where is the issue in the expression...?:
+	for (size_t i = 0; i < p_error_char_id; i++)
+		putc(' ', stdout);
+
+	puts("^"); // Better than two `putc()` calls!
+	puts(p_error_message);
+	exit(EXIT_FAILURE);
 }
-
-char* read_line(const size_t p_factor, size_t *p_out_size) {
-	size_t size = 5; // ...Buffer's current size?
-	size_t read_size = 0; // How filled is the buffer?!
-	char *line = malloc(size);
-
-	if (!line) {
-		perror("`read_line()` failed to allocate memory.");
-		return NULL;
-	}
-
-	for (int c = fgetc(stdin); !(c == EOF || c == '\n'); c = fgetc(stdin)) { // FlawFinder: Ignore. We can't do it here either...
-		line[read_size] = c;
-		++read_size;
-
-		if (read_size == size) {
-			size += p_factor;
-			char *reallocated = realloc(line, size);
-
-			if (!reallocated) {
-				perror("`read_line()` failed to re-allocate memory.");
-				return line;
-			}
-
-			line = reallocated;
-		}
-	}
-
-	// Tell 'em the size. TELL 'EM!:
-	*p_out_size = read_size;
-
-	// We re-allocate to make sure we have a string of the perfect size:
-	line = realloc(line, read_size + 1);
-	line[read_size] = '\0';
-
-	return line;
-}
+#pragma endregion
