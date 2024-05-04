@@ -6,7 +6,7 @@
 
 int main() {
 	size_t expr_len;
-	const char *expr = read_line(5, &expr_len);
+	char *expr = read_line(5, &expr_len);
 	++expr_len;
 
 	printf("Expression length: `%zu`.\n", expr_len);
@@ -17,19 +17,27 @@ int main() {
 	});
 
 	double result = 0;
-	for (size_t i = 0; i < expr_len; ++i) {
-		const unsigned char c = expr[i];
+	for (char *i = expr; ; i += sizeof(char)) {
+		const unsigned char c = *i;
 
 		// Absolutely ignore whitespaces:
 		if (c == ' ' || c == '\t')
 			continue;
 
-		// `47` is `'0'`, and `57` is `'9'`:
-		if (c > 47 && c < 58) { // ...We have a number.
-			double_stack_push(stack, c);
-		} else { // ...We have some operand.
+		char *ptr_to_char_after_num = NULL;
+		const double num = strtod(i, &ptr_to_char_after_num);
+
+		if (ptr_to_char_after_num != i) {
+			double_stack_push(stack, num);
+		} else { // ...We may have some operand.
 			switch (c) {
 				case POSTFIX_ADD: {
+					if (stack->top < 2) {
+						// Error state?
+					}
+
+					double n1 = double_stack_pop(stack);
+					double n2 = double_stack_pop(stack);
 				} break;
 
 				case POSTFIX_DIVIDE: {
