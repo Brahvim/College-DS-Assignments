@@ -84,7 +84,9 @@ int main() {
 		++expr_chars_processed;
 	}
 
+	free(expr);
 	printf("Result: `%lf`.\n", result);
+	double_stack_destroy(operand_stack);
 }
 
 /**
