@@ -6,7 +6,7 @@
 
 int main() {
 	size_t expr_len;
-	char *expr = read_line(5, &expr_len);
+	expr_char_t *expr = read_line(5, &expr_len);
 	++expr_len;
 
 	printf("Expression length: `%zu`.\n", expr_len);
@@ -17,14 +17,14 @@ int main() {
 	});
 
 	double result = 0;
-	for (char *i = expr; ; i += sizeof(char)) {
-		const unsigned char c = *i;
+	for (expr_char_t *i = expr; ; i += sizeof(expr_char_t)) {
+		const expr_char_t c = *i;
 
 		// Absolutely ignore whitespaces:
 		if (c == ' ' || c == '\t')
 			continue;
 
-		char *ptr_to_char_after_num = NULL;
+		expr_char_t *ptr_to_char_after_num = NULL;
 		const double num = strtod(i, &ptr_to_char_after_num);
 
 		if (ptr_to_char_after_num != i) {
@@ -33,7 +33,9 @@ int main() {
 			switch (c) {
 				case POSTFIX_ADD: {
 					if (stack->top < 2) {
-						// Error state?
+						puts("Hey! A postfix expression requires at least two operands (numbers) before an operator!");
+						puts("Your expression may be erroneous.");
+						printf("%s", i);
 					}
 
 					double n1 = double_stack_pop(stack);
