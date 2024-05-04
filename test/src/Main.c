@@ -17,29 +17,38 @@ int main() {
 	});
 
 	double result = 0;
-	for (expr_char_t *i = expr; ; i += sizeof(expr_char_t)) {
-		const expr_char_t c = *i;
+	size_t expr_chars_processed = 0;
+
+	for (expr_char_t *expr_char_ptr = expr; ; expr_char_ptr += sizeof(expr_char_t)) {
+		const expr_char_t c = *expr_char_ptr;
 
 		// Absolutely ignore whitespaces:
 		if (c == ' ' || c == '\t')
 			continue;
 
 		expr_char_t *ptr_to_char_after_num = NULL;
-		const double num = strtod(i, &ptr_to_char_after_num);
+		const double num = strtod(expr_char_ptr, &ptr_to_char_after_num);
 
-		if (ptr_to_char_after_num != i) {
+		if (ptr_to_char_after_num != expr_char_ptr) {
 			double_stack_push(stack, num);
 		} else { // ...We may have some operand.
+			if (stack->top < 2) { // Error!
+				puts("Hey! A postfix expression requires at least two operands (numbers) before an operator!");
+				puts("Your expression may be erroneous.");
+				printf("%s", expr_char_ptr);
+
+				// Tell them where the issue in their expression is!
+				for (size_t i = 0; i < expr_chars_processed; i++)
+					putc(' ', stdout);
+
+				puts("\n^");
+			}
+
+			const double n1 = double_stack_pop(stack);
+			const double n2 = double_stack_pop(stack);
+
 			switch (c) {
 				case POSTFIX_ADD: {
-					if (stack->top < 2) {
-						puts("Hey! A postfix expression requires at least two operands (numbers) before an operator!");
-						puts("Your expression may be erroneous.");
-						printf("%s", i);
-					}
-
-					double n1 = double_stack_pop(stack);
-					double n2 = double_stack_pop(stack);
 				} break;
 
 				case POSTFIX_DIVIDE: {
@@ -60,6 +69,8 @@ int main() {
 				}
 			}
 		}
+
+		++expr_chars_processed;
 	}
 
 	printf("Result: `%lf`.\n", result);
