@@ -7,13 +7,14 @@
 #include "Main.h"
 
 int main() {
+	puts("Please enter your postfix expression.");
+
 	size_t expr_len = 0;
 	expr_char_t *expr = read_line(5, &expr_len);
 	++expr_len;
 
 	printf("Expression length: `%zu`.\n", expr_len);
 
-	stack_status operand_stack_status;
 	MAKE_STACK_HANDLING_ALL(double, operand_stack, 0, {
 		puts("Failed to allocate for `operand_stack`...\n");
 		exit(EXIT_FAILURE);
@@ -44,6 +45,7 @@ int main() {
 					putc(' ', stdout);
 
 				puts("\n^");
+				puts(" (Erroneous operator).");
 			}
 
 			double n1 = 0, n2 = 0;
