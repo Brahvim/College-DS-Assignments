@@ -11,7 +11,7 @@ int main() {
 
 	printf("Expression length: `%zu`.\n", expr_len);
 
-	MAKE_STACK_HANDLING_ALL(char, stack, 0, {
+	MAKE_STACK_HANDLING_ALL(double, stack, 0, {
 		puts("Failed to allocate for `stack`...\n");
 		exit(EXIT_FAILURE);
 	});
@@ -20,10 +20,14 @@ int main() {
 	for (size_t i = 0; i < expr_len; ++i) {
 		const unsigned char c = expr[i];
 
+		// Absolutely ignore whitespaces:
+		if (c == ' ' || c == '\t')
+			continue;
+
 		// `47` is `'0'`, and `57` is `'9'`:
-		if (c > 47 && c < 58) {
-			// ...We have a number.
-		} else // ...We have some operand.
+		if (c > 47 && c < 58) { // ...We have a number.
+			double_stack_push(stack, c);
+		} else { // ...We have some operand.
 			switch (c) {
 				case POSTFIX_ADD: {
 				} break;
@@ -45,6 +49,7 @@ int main() {
 					exit(EXIT_FAILURE);
 				}
 			}
+		}
 	}
 
 	printf("Result: `%lf`.\n", result);

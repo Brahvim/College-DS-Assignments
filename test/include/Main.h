@@ -10,6 +10,7 @@ typedef enum {
 } postfix_operation;
 
 MAKE_STACK_OF(char);
+MAKE_STACK_OF(double);
 
 /**
  * [ https://stackoverflow.com/questions/52984551/using-fgets-with-realloc ],
