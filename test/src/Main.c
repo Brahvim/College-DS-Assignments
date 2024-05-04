@@ -7,7 +7,7 @@
 #include "Main.h"
 
 int main() {
-	size_t expr_len;
+	size_t expr_len = 0;
 	expr_char_t *expr = read_line(5, &expr_len);
 	++expr_len;
 
