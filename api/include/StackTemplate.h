@@ -71,6 +71,9 @@ stack_status type##_stack_create(struct type##_stack **out_stack, size_t initial
 	if (stack == NULL)																					\
 		return STACK_MALLOC;																			\
 																										\
+	if (initial_allocation_size < 0)																	\
+		initial_allocation_size = 1;																	\
+																										\
 	stack->top = 0;                                                      								\
 	stack->fits = initial_allocation_size;                                                      		\
 	stack->array = calloc(initial_allocation_size, sizeof(type));                              			\
