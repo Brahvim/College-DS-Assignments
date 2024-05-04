@@ -135,20 +135,3 @@ char* read_line(const size_t p_factor, size_t *p_out_size) {
 
 	return line;
 }
-
-void stack_to_string(struct char_stack *p_stack, char *p_string) {
-	char c;
-	stack_status s;
-	int counter = 0;
-	char_stack_pop(p_stack); // C-strings, well, they have a `\0` at the end...
-
-	while (STACK_NO_ERROR(s = char_stack_poll(p_stack, &c)))
-		p_string[counter++] = c;
-
-	p_string[counter] = '\0';
-}
-
-void string_to_stack(const char *p_string, struct char_stack *p_stack) {
-	for (int i = 0; i < p_stack->fits; ++i)
-		char_stack_push(p_stack, p_string[i]);
-}

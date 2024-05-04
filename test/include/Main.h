@@ -22,7 +22,3 @@ MAKE_STACK_OF(double);
 void clear_stdin(void);
 // ...I modified this one:
 char* read_line(const size_t factor, size_t *out_size);
-
-// From the previous question, <chuckle>!:
-void stack_to_string(struct char_stack *stack, char *string);
-void string_to_stack(const char *string, struct char_stack *stack);
