@@ -4,9 +4,9 @@
 #include "Main.h"
 
 int main() {
-	size_t uin_len;
+	size_t uin_len = 0;
 	printf("Please enter the string to reverse: ");
-	const char *uin = read_line(5, &uin_len);
+	char *uin = read_line(5, &uin_len);
 	++uin_len;
 
 	MAKE_STACK_HANDLING_ALL(char, stack, uin_len, {
@@ -21,6 +21,7 @@ int main() {
 	printf("Reversed string: \"%s\"\n", reversed_string);
 
 	// No leaks here!:
+	free(uin);
 	free(reversed_string);
 	char_stack_destroy(stack);
 }
