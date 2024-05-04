@@ -1,6 +1,8 @@
+#include <math.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <float.h>
 
 #include "Main.h"
 
@@ -11,17 +13,17 @@ int main() {
 
 	printf("Expression length: `%zu`.\n", expr_len);
 
-	MAKE_STACK_HANDLING_ALL(double, stack, 0, {
-		puts("Failed to allocate for `stack`...\n");
+	stack_status operand_stack_status;
+	MAKE_STACK_HANDLING_ALL(double, operand_stack, 0, {
+		puts("Failed to allocate for `operand_stack`...\n");
 		exit(EXIT_FAILURE);
 	});
 
+	expr_char_t c = 0;
 	double result = 0;
 	size_t expr_chars_processed = 0;
 
-	for (expr_char_t *expr_char_ptr = expr; ; expr_char_ptr += sizeof(expr_char_t)) {
-		const expr_char_t c = *expr_char_ptr;
-
+	for (expr_char_t *expr_char_ptr = expr; (c = *expr_char_ptr) != '\0'; expr_char_ptr += sizeof(expr_char_t)) {
 		// Absolutely ignore whitespaces:
 		if (c == ' ' || c == '\t')
 			continue;
@@ -30,9 +32,9 @@ int main() {
 		const double num = strtod(expr_char_ptr, &ptr_to_char_after_num);
 
 		if (ptr_to_char_after_num != expr_char_ptr) {
-			double_stack_push(stack, num);
+			double_stack_push(operand_stack, num);
 		} else { // ...We may have some operand.
-			if (stack->top < 2) { // Error!
+			if (operand_stack->top < 2) { // Error!
 				puts("Hey! A postfix expression requires at least two operands (numbers) before an operator!");
 				puts("Your expression may be erroneous.");
 				printf("%s", expr_char_ptr);
@@ -44,23 +46,32 @@ int main() {
 				puts("\n^");
 			}
 
-			const double n1 = double_stack_pop(stack);
-			const double n2 = double_stack_pop(stack);
+			double n1 = 0, n2 = 0;
+			double_stack_poll(operand_stack, &n1);
+			double_stack_poll(operand_stack, &n2);
 
 			switch (c) {
 				case POSTFIX_ADD: {
+					result += n1 + n2;
 				} break;
 
 				case POSTFIX_DIVIDE: {
+					if (!(n1 == 0 || n2 == 0))
+						result += n1 / n2;
 				} break;
 
-				case POSTFIX_MODULO: {
+				case POSTFIX_MODULO: { // Kinda' don't wanna allow this one.
+					// signed long long int n1_rounded = round(n1);
+					// if (n1_rounded == n1)
+					// 	result += (n1 % n2);
 				} break;
 
 				case POSTFIX_MULTIPLY: {
+					result += n1 * n2;
 				} break;
 
 				case POSTFIX_SUBTRACT: {
+					result += n1 * n2;
 				} break;
 
 				default: {
