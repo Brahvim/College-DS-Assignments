@@ -2,4 +2,4 @@
 
 #include "Stack.h"
 
-MAKE_STACK_OF(int);
+DECLARE_STACK_OF(int);

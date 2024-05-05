@@ -3,6 +3,8 @@
 
 #include "Main.h"
 
+DEFINE_STACK_OF(int);
+
 int main() {
 	// Create a stack with an initial allocation size for `10` `int`s:
 	MAKE_STACK_HANDLING_ALL(int, stack, 10, {
