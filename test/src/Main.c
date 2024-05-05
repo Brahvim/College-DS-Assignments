@@ -3,11 +3,13 @@
 
 #include "Main.h"
 
+DEFINE_STACK_OF(char);
+
 int main() {
-	size_t uin_len = 0;
+	size_t uin_len;
 	printf("Please enter the string to reverse: ");
 	char *uin = read_line(5, &uin_len);
-	++uin_len;
+	++uin_len; // NOLINT(clang-analyzer-core.uninitialized.Assign)
 
 	MAKE_STACK_HANDLING_ALL(char, stack, uin_len, {
 		puts("Failed to allocate for `stack`.\n");
@@ -16,7 +18,12 @@ int main() {
 
 	string_to_stack(uin, stack);
 
-	char *reversed_string = malloc(uin_len);
+	char *reversed_string = malloc(uin_len); // NOLINT(clang-analyzer-optin.portability.UnixAPI)
+	if (!reversed_string) {
+		puts("Could not allocate space for the reversed string...");
+		exit(EXIT_FAILURE);
+	}
+
 	stack_to_string(stack, reversed_string);
 	printf("Reversed string: \"%s\"\n", reversed_string);
 

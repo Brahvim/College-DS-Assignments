@@ -1,7 +1,8 @@
 #pragma once
+
 #include "Stack.h"
 
-MAKE_STACK_OF(char);
+DECLARE_STACK_OF(char);
 
 /**
  * [ https://stackoverflow.com/questions/52984551/using-fgets-with-realloc ],
