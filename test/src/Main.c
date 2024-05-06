@@ -2,6 +2,6 @@
 
 int main() {
 
-    struct node *list;
+    MAKE_NODE_HANDLING_ALL(list, error, {});
 
 }
