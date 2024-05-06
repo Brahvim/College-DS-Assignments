@@ -62,10 +62,10 @@ enum node_status {
 
 enum node_status create_node(struct node **node);
 
-enum node_status destroy_node(struct node *node);
-
 enum node_status destroy_linked_list(struct node *first_node);
 
 enum node_status insert_node_in_linked_list(struct node *node);
 
-enum node_status create_linked_list(struct node **memory, size_t list_length);
+enum node_status destroy_node(struct node *previous, struct node *to_destroy);
+
+enum node_status create_contiguous_linked_list(struct node **first_node, size_t list_length);
