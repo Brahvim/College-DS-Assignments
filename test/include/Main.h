@@ -1,8 +1,8 @@
 #pragma once
 
 #include <stdio.h>
-#include <stdint.h>
+#include <stddef.h>
 
 #include "Api.h"
 
-uint64_t factorial(uint64_t number);
+size_t factorial(size_t number);
