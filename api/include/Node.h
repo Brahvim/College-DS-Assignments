@@ -1,8 +1,8 @@
 #pragma once
 
-#define NODE_OKAY(x) ((x) == NODE_OK)
+#define NODE_OKAY(x) ((x) == NODE_NO_ERROR)
 
-#define NODE_ERROR(x) ((x) != NODE_OK)
+#define NODE_ERROR(x) ((x) != NODE_NO_ERROR)
 
 struct node {
 
