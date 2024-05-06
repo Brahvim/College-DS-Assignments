@@ -26,6 +26,7 @@ struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *p_
 		} else { // ...We may have some operand.
 			if (operand_stack->top < 2) { // Error!
 				to_ret->error_enum = POSTFIX_ERROR_INSUFFICIENT_OPERANDS;
+				to_ret->error_char_index = expr_chars_processed + 1;
 				goto error_cleanup;
 			}
 
@@ -41,6 +42,7 @@ struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *p_
 
 				case POSTFIX_OPERATION_DIVIDE: {
 					if (n1 == 0 || n2 == 0) {
+						to_ret->error_char_index = expr_chars_processed + 2;
 						to_ret->error_enum = POSTFIX_ERROR_DIVIDE_BY_ZERO;
 						goto error_cleanup;
 					}
@@ -77,7 +79,6 @@ struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *p_
 	double_stack_poll(operand_stack, &to_ret->result);
 
 error_cleanup:
-	to_ret->error_char_index = expr_chars_processed + 2;
 	double_stack_destroy(operand_stack);
 	return to_ret;
 }
