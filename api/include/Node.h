@@ -66,6 +66,8 @@ enum node_status destroy_linked_list(struct singly_linked_node *first_node);
 
 enum node_status insert_node_in_linked_list(struct singly_linked_node *singly_linked_node);
 
+enum node_status create_linked_list(struct singly_linked_node **first_node, size_t list_length);
+
 enum node_status destroy_node(struct singly_linked_node *previous, struct singly_linked_node *to_destroy);
 
 enum node_status create_contiguous_linked_list(struct singly_linked_node **first_node, size_t list_length);
