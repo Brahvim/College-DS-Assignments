@@ -4,10 +4,9 @@ int main() {
 
     MAKE_NODE_HANDLING_ALL(list, error, {});
 
-    size_t length = 10;
-
+    const size_t name__length = 10;
     struct node *name = (struct node*)0x55;
-    size_t name__length = 1;
+    struct node *name__memory_block = calloc(sizeof(struct node), name__length);
 
     if (length > 0)
         name__length = length;
@@ -25,6 +24,8 @@ int main() {
         name__last_node->next = name__current_node;
         name__last_node = name__current_node;
     }
+
+
 
 
 }

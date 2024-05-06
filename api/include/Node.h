@@ -67,3 +67,5 @@ enum node_status destroy_node(struct node *node);
 enum node_status destroy_linked_list(struct node *first_node);
 
 enum node_status insert_node_in_linked_list(struct node *node);
+
+enum node_status create_linked_list(struct node **memory, size_t list_length);
