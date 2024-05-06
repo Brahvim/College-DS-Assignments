@@ -14,7 +14,7 @@ DEFINE_STACK_METHODS(type)
 #define DEFINE_STACK_STRUCT(type)	\
 struct type##_stack { 				\
 									\
-	type * array;                   \
+	type *array;                   	\
 	size_t top;                     \
 	size_t fits;               		\
 									\
