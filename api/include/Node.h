@@ -27,6 +27,20 @@ switch (create_node(&name)) {																\
 	break;																					\
 }																							\
 
+#define MAKE_LINKED_LIST_HANDLING_ALL(name, error_name, length, error_code_block)								\
+																												\
+	struct node *name = NULL;																					\
+	size_t name##_length = length;																				\
+	struct node *name_##_last_node = NULL;																		\
+																												\
+	for (size_t name##_allocated_length = 0; name##_allocated_length < length; ++name##_allocated_length) {		\
+		enum node_status error_name;																			\
+																												\
+		if (NODE_ERROR(error_name = create_node(&name))) 														\
+			error_code_block;																					\
+	}																											\
+
+
 struct node {
 
 	int *data;
