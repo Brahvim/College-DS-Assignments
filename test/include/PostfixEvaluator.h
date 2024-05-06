@@ -8,32 +8,62 @@
 
 #include "Stack.h"
 
-typedef enum {
-    POSTFIX_OPERATION_ADD = '+',
-    POSTFIX_OPERATION_DIVIDE = '/',
-    // POSTFIX_OPERATION_MODULO = '%',
-    POSTFIX_OPERATION_MULTIPLY = '*',
-    POSTFIX_OPERATION_SUBTRACT = '-',
-} postfix_evaluator_operation;
+#pragma region // `enum`s and their arrays.
+enum postfix_evaluator_error {
 
-const int g_postfix_evaluator_operations[4] = {
-    POSTFIX_OPERATION_ADD,
-    POSTFIX_OPERATION_DIVIDE,
-    POSTFIX_OPERATION_MULTIPLY,
-    POSTFIX_OPERATION_SUBTRACT,
+	POSTFIX_ERROR_NONE,
+
+	POSTFIX_ERROR_DIVIDE_BY_ZERO,
+
+	POSTFIX_ERROR_INSUFFICIENT_OPERANDS,
+
 };
 
-typedef enum {
-    POSTFIX_ERROR_A,
-} postfix_evaluator_error;
+enum postfix_evaluator_operation {
 
-const int g_postfix_evaluator_errors[4] = {
-    POSTFIX_ERROR_A,
+	POSTFIX_OPERATION_ADD = '+',
+
+	POSTFIX_OPERATION_DIVIDE = '/',
+
+	// POSTFIX_OPERATION_MODULO = '%',
+
+	POSTFIX_OPERATION_MULTIPLY = '*',
+
+	POSTFIX_OPERATION_SUBTRACT = '-',
+
 };
 
-MAKE_STACK_OF(double);
+static const enum postfix_evaluator_error g_postfix_evaluator_errors[] = {
+	POSTFIX_ERROR_NONE,
+	POSTFIX_ERROR_DIVIDE_BY_ZERO,
+	POSTFIX_ERROR_INSUFFICIENT_OPERANDS,
+};
+
+static const enum postfix_evaluator_operation g_postfix_evaluator_operations[] = {
+	POSTFIX_OPERATION_ADD,
+	POSTFIX_OPERATION_DIVIDE,
+	POSTFIX_OPERATION_MULTIPLY,
+	POSTFIX_OPERATION_SUBTRACT,
+};
+#pragma endregion
+
+struct postfix_evaluator_status_data {
+
+	/** @brief  The result of the expression's evaluation! */
+	double result;
+
+	/** @brief Where in the expression is the error? */
+	size_t error_char_index;
+
+	/** @brief What is the error? */
+	enum postfix_evaluator_error error_enum;
+
+};
+
 typedef char expr_char_t;
 
+DECLARE_STACK_OF(double);
+
 // Program-specific stuff:
-double postfix_evaluator_evaluate(expr_char_t *expr);
-void postfix_evaluator_report_error(const size_t error_char_id, const char *error_message);
+struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *expr);
+const char* postfix_evaluator_error_to_string(const enum postfix_evaluator_error error_enum);
