@@ -21,10 +21,10 @@ enum node_status {
 
 };
 
-enum node_status create_node();
+enum node_status create_node(struct node **node);
 
-enum node_status insert_node(struct node*);
+enum node_status destroy_node(struct node *node);
 
-enum node_status destroy_node(struct node*);
+enum node_status destroy_linked_list(struct node *first_node);
 
-enum node_status put_node_data(struct node*, int data);
+enum node_status insert_node_in_linked_list(struct node *node);
