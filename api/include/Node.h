@@ -1,5 +1,7 @@
 #pragma once
 
+#include <stddef.h>
+
 #define NODE_OKAY(x) ((x) == NODE_STATUS_NO_ERROR)
 
 #define NODE_ERROR(x) ((x) != NODE_STATUS_NO_ERROR)
