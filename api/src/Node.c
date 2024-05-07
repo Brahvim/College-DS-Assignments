@@ -27,19 +27,11 @@ enum node_status destroy_linked_list(struct singly_linked_node *p_first_node) {
         return NODE_STATUS_NULL;
 
     struct singly_linked_node *current = p_first_node;
-    struct singly_linked_node *next = p_first_node->next;
 
-    // Grab the current node,
     while (current) {
-        free(current); // ...free it!
-
-        if (!next)
-            break;
-
-        current = next; // Copy the next one to be here. Doesn't matter if it's `NULL`.
-        // Now, `current` and `next` are the same!
-        // ...So, it literally doesn't matter which one's `next` we grab:
-        next = next->next;
+        struct singly_linked_node *next = current->next;
+        free(current);
+        current = next;
     }
 
     return NODE_STATUS_NO_ERROR;
