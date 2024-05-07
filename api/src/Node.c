@@ -37,11 +37,11 @@ enum node_status destroy_linked_list(struct singly_linked_node *p_first_node) {
     return NODE_STATUS_NO_ERROR;
 }
 
-enum node_status insert_node_in_linked_list(struct singly_linked_node *p_node) {
-
-}
-
 enum node_status create_contiguous_linked_list(struct singly_linked_node **p_first_node, size_t p_list_length) {
 
-}
+    // Plan:
+    // - Allocate the list contiguously.
+    // - If you can't do that, try to allocate a list half the size of what you tried allocating last.
+    // - Repeat!
 
+}
