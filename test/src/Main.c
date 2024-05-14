@@ -4,7 +4,7 @@ int main() {
 	fputs("Put a number, get a factorial: ", stdout);
 
 	size_t input_or_result = 0;
-	scanf("%zu", &input_or_result);
+	scanf("%zu", &input_or_result); // NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling)
 
 	// This can be improved further by comparing against what cannot be computed on an amd64 processor.
 	// That's `65`. ...and for `uint_32_t`, `12`!
@@ -19,7 +19,7 @@ int main() {
 // Forget tail-recursive optimizations; we need to make sure we don't overflow!:
 size_t factorial(size_t p_number) {
 	if (p_number < 2)
-		return p_number;
+		return p_number == 0 ? 1 : p_number;
 
 	// Recursive call:
 	const size_t to_ret = p_number-- * factorial(p_number); // NOLINT(clang-diagnostic-unsequenced)
