@@ -1,3 +1,16 @@
 {
-    "sonarlint.pathToCompileCommands": "${workspaceFolder}/build/compile_commands.json"
+    "sonarlint.pathToCompileCommands": "${workspaceFolder}/build/compile_commands.json",
+    "cSpell.words": [
+        "uninitvar"
+    ],
+    "files.associations": {
+        "*.s": "asm-intel-x86-generic",
+        "*.asm": "asm-intel-x86-generic",
+        "*.luac": "lua",
+        "typeinfo": "c",
+        "singlylinkednode.h": "c",
+        "singlylinkednodeutils.h": "c",
+        "singlylinkedintnode.h": "c",
+        "singlylinkednodetemplate.h": "c"
+    }
 }
