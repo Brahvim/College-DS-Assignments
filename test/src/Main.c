@@ -28,22 +28,15 @@ int main() {
     puts("List data:");
     {
         size_t i = 0; // cppcheck-suppress variableScope
-        TRAVERSE_LINKED_LIST(int, list, node, {
-            printf("[%p]: `%d`\n", node, node->data = ++i);
-        });
+        TRAVERSE_LINKED_LIST(int, list, node, printf("[%p]: `%d`\n", node, node->data = ++i));
     }
 
     struct singly_linked_int_node *head = list;
     list = list->next;
     free(head);
 
-    puts("...After removing the head node:");
-    {
-        size_t i = 0; // cppcheck-suppress variableScope
-        TRAVERSE_LINKED_LIST(int, list, node, {
-            printf("[%p]: `%d`\n", node, node->data = ++i);
-        });
-    }
+    puts("\n...After removing the head node:");
+    TRAVERSE_LINKED_LIST(int, list, node, printf("[%p]: `%d`\n", node, node->data));
 
     destroy_singly_linked_int_list(list);
 }
