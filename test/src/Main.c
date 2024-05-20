@@ -25,6 +25,19 @@ int main() {
     }
     puts("\n...Done allocating!\n");
 
+    puts("List data:");
+    {
+        size_t i = 0; // cppcheck-suppress variableScope
+        TRAVERSE_LINKED_LIST(int, list, node, {
+            printf("[%p]: `%d`\n", node, node->data = ++i);
+        });
+    }
+
+    struct singly_linked_int_node *head = list;
+    list = list->next;
+    free(head);
+
+    puts("...After removing the head node:");
     {
         size_t i = 0; // cppcheck-suppress variableScope
         TRAVERSE_LINKED_LIST(int, list, node, {
