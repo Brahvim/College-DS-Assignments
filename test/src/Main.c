@@ -9,12 +9,12 @@ int main() {
     });
 
     MAKE_BINARY_NODE_HANDLING_ALL(int, left_node, left_node_error, {
-        puts("Could not allocate for some left node.");
+        puts("Could not allocate for the left node.");
         exit(EXIT_FAILURE);
     });
 
     MAKE_BINARY_NODE_HANDLING_ALL(int, right_node, right_node_error, {
-        puts("Could not allocate for some right node.");
+        puts("Could not allocate for the right node.");
         exit(EXIT_FAILURE);
     });
 
