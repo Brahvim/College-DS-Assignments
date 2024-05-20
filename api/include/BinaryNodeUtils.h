@@ -29,5 +29,4 @@ switch (create_binary_##type##_node(&name)) {														\
 	if (list != NULL)																															\
 		for (struct binary_##type##_node *iterable_name = list; iterable_name != NULL; iterable_name = iterable_name->next) loop_body			\
 																																				\
-																																				\
 
