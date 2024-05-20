@@ -21,9 +21,9 @@ int main() {
     tree->left = left_node;
     tree->right = right_node;
 
-    tree->right->data = 1;
-    tree->left->data = 2;
-    tree->data = 3;
+    tree->right->data = 3;
+    tree->left->data = 1;
+    tree->data = 2;
 
     free(tree->right);
     free(tree->left);
