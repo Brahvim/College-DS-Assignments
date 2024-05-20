@@ -12,6 +12,12 @@
         "singlylinkednodeutils.h": "c",
         "singlylinkedintnode.h": "c",
         "singlylinkednodetemplate.h": "c",
-        "cstring": "c"
+        "cstring": "c",
+        "array": "c",
+        "compare": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c"
     }
 }
