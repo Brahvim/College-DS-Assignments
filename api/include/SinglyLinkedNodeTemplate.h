@@ -51,7 +51,7 @@ enum singly_linked_node_status destroy_singly_linked_##type##_list(struct singly
 																																			\
 enum singly_linked_node_status destroy_singly_linked_##type##_node(																			\
 	struct singly_linked_##type##_node *p_previous, struct singly_linked_##type##_node *p_to_free) {										\
-	/* ...It's an assignment requirement to use singly-linked nodes, LOL:*/																	\
+	/* ...It's an assignment requirement to use singly-linked nodes, LOL: */																	\
 	if (p_previous && p_to_free)																											\
 		p_previous->next = p_to_free->next;																									\
 	else return SINGLY_LINKED_NODE_STATUS_NULL;																								\
