@@ -25,8 +25,3 @@ switch (create_binary_##type##_node(&name)) {														\
 }																									\
 																									\
 
-#define TRAVERSE_LINKED_LIST(type, list, iterable_name, loop_body)																				\
-	if (list != NULL)																															\
-		for (struct binary_##type##_node *iterable_name = list; iterable_name != NULL; iterable_name = iterable_name->next) loop_body			\
-																																				\
-
