@@ -26,17 +26,17 @@ enum singly_linked_node_status create_singly_linked_##type##_node(struct singly_
 	struct singly_linked_##type##_node *const node = *p_node;																				\
 																																			\
 	if (!node)																																\
-		return NODE_STATUS_MALLOC;																											\
+		return SINGLY_LINKED_NODE_STATUS_MALLOC;																							\
 																																			\
 	memset(&(node->data), 0, sizeof(type)); /* NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling) */				\
 	node->next = NULL;																														\
 																																			\
-	return NODE_STATUS_NO_ERROR;																											\
+	return SINGLY_LINKED_NODE_STATUS_NO_ERROR;																								\
 }																																			\
 																																			\
 enum singly_linked_node_status destroy_singly_linked_##type##_list(struct singly_linked_##type##_node *p_first_node) {						\
 	if (!p_first_node)																														\
-		return NODE_STATUS_NULL;																											\
+		return SINGLY_LINKED_NODE_STATUS_NULL;																								\
 																																			\
 	struct singly_linked_##type##_node *current = p_first_node;																				\
 																																			\
@@ -46,7 +46,7 @@ enum singly_linked_node_status destroy_singly_linked_##type##_list(struct singly
 		current = next;																														\
 	}																																		\
 																																			\
-	return NODE_STATUS_NO_ERROR;																											\
+	return SINGLY_LINKED_NODE_STATUS_NO_ERROR;																								\
 }																																			\
 																																			\
 enum singly_linked_node_status destroy_singly_linked_##type##_node(																			\
@@ -54,10 +54,10 @@ enum singly_linked_node_status destroy_singly_linked_##type##_node(													
 	/* ...It's an assignment requirement to use singly-linked nodes, LOL:*/																	\
 	if (p_previous && p_to_free)																											\
 		p_previous->next = p_to_free->next;																									\
-	else return NODE_STATUS_NULL;																											\
+	else return SINGLY_LINKED_NODE_STATUS_NULL;																								\
 																																			\
 	free(p_to_free);																														\
-	return NODE_STATUS_NULL;																												\
+	return SINGLY_LINKED_NODE_STATUS_NULL;																									\
 }																																			\
 																																			\
 

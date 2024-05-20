@@ -3,7 +3,7 @@
 #include "SinglyLinkedIntNode.h"
 
 int main() {
-    MAKE_NODE_HANDLING_ALL(int, list, list_init_error, {
+    MAKE_SINGLY_LINKED_NODE_HANDLING_ALL(int, list, list_init_error, {
         puts("Allocating the entire list failed!");
         exit(EXIT_FAILURE);
     });
@@ -14,7 +14,7 @@ int main() {
     struct singly_linked_int_node *previous_node = list;
     puts("Allocating nodes!:\n");
     for (size_t i = 1; i < 5; ++i) {
-        MAKE_NODE_HANDLING_ALL(int, current_node, node_init_error, {
+        MAKE_SINGLY_LINKED_NODE_HANDLING_ALL(int, current_node, node_init_error, {
             puts("Allocating some node failed :|");
             exit(EXIT_FAILURE);
         });
@@ -27,8 +27,8 @@ int main() {
 
     puts("List data:");
     {
-        size_t i = 0; // cppcheck-suppress variableScope
-        TRAVERSE_LINKED_LIST(int, list, node, printf("[%p]: `%d`\n", node, node->data = ++i));
+        size_t i = 0;
+        TRAVERSE_SINGLY_LINKED_LIST(int, list, node, printf("[%p]: `%d`\n", node, node->data = ++i));
     }
 
     struct singly_linked_int_node *head = list;
@@ -36,7 +36,7 @@ int main() {
     free(head);
 
     puts("\n...After removing the head node:");
-    TRAVERSE_LINKED_LIST(int, list, node, printf("[%p]: `%d`\n", node, node->data));
+    TRAVERSE_SINGLY_LINKED_LIST(int, list, node, printf("[%p]: `%d`\n", node, node->data));
 
     destroy_singly_linked_int_list(list);
 }
