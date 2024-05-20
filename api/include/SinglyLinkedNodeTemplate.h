@@ -1,6 +1,7 @@
 #pragma once
 
 #include <stdlib.h>
+#include <memory.h>
 
 #define DECLARE_SINGLY_LINKED_NODE_STRUCT(type)			\
 struct singly_linked_##type##_node {					\
@@ -20,15 +21,15 @@ enum singly_linked_node_status destroy_singly_linked_##type##_node(													
 	struct singly_linked_##type##_node *to_destroy);																					\
 
 #define DEFINE_SINGLY_LINKED_NODE_METHODS(type)																								\
-																																			\
-enum singly_linked_node_status create_singly_linked_##type##_node(struct singly_linked_##type##_node **p_node) {								\
+enum singly_linked_node_status create_singly_linked_##type##_node(struct singly_linked_##type##_node **p_node) {							\
 	*p_node = malloc(sizeof(struct singly_linked_##type##_node));																			\
+	struct singly_linked_##type##_node *const node = *p_node;																				\
 																																			\
-	if (!(*p_node))																															\
-	return NODE_STATUS_MALLOC;																												\
+	if (!node)																																\
+		return NODE_STATUS_MALLOC;																											\
 																																			\
-	(*p_node)->data = 0;																													\
-	(*p_node)->next = NULL;																													\
+	memset(&(node->data), 0, sizeof(type)); /* NOLINT(clang-analyzer-security.insecureAPI.DeprecatedOrUnsafeBufferHandling) */				\
+	node->next = NULL;																														\
 																																			\
 	return NODE_STATUS_NO_ERROR;																											\
 }																																			\
@@ -40,7 +41,7 @@ enum singly_linked_node_status destroy_singly_linked_##type##_list(struct singly
 	struct singly_linked_##type##_node *current = p_first_node;																				\
 																																			\
 	while (current) {																														\
-		struct singly_linked_##type##_node *next = current->next;																			\
+		struct singly_linked_##type##_node *const next = current->next;																		\
 		free(current);																														\
 		current = next;																														\
 	}																																		\

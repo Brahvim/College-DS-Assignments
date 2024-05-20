@@ -11,6 +11,7 @@
         "singlylinkednode.h": "c",
         "singlylinkednodeutils.h": "c",
         "singlylinkedintnode.h": "c",
-        "singlylinkednodetemplate.h": "c"
+        "singlylinkednodetemplate.h": "c",
+        "cstring": "c"
     }
 }
