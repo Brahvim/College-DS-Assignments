@@ -17,15 +17,4 @@ int main() {
         puts("Could not allocate for the right node.");
         exit(EXIT_FAILURE);
     });
-
-    tree->left = left_node;
-    tree->right = right_node;
-
-    tree->right->data = 3;
-    tree->left->data = 1;
-    tree->data = 2;
-
-    free(tree->right);
-    free(tree->left);
-    free(tree);
 }
