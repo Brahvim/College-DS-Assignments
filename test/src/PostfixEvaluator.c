@@ -1,7 +1,5 @@
 #include "PostfixEvaluator.h"
 
-DEFINE_STACK_OF(double);
-
 struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *p_expr) {
 	// Nobody needs a collection for this, haha!:
 	MAKE_STACK_HANDLING_ALL(double, operand_stack, 2, {
@@ -36,7 +34,8 @@ struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *p_
 			double_stack_poll(operand_stack, &n1);
 			double_stack_poll(operand_stack, &n2);
 
-			switch (c) {
+			switch (c) { // Should these instead be mapped to function pointers? REEEEEEEEEE!
+				// AND... and should there be... OPERATOR-SPECIFIC ERRORS?!
 				case POSTFIX_OPERATION_ADD: {
 					result = n1 + n2;
 				} break;
@@ -65,8 +64,9 @@ struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *p_
 				} break;
 
 				default: {
-					puts("Ooops! Encountered unknown character! Exiting now...");
-					exit(EXIT_FAILURE);
+					to_ret->error_char_index = expr_chars_processed + 2;
+					to_ret->error_enum = POSTFIX_ERROR_UNKNOWN_OPERATOR;
+					goto error_cleanup;
 				}
 			}
 
@@ -91,6 +91,9 @@ const char* postfix_evaluator_error_to_string(const enum postfix_evaluator_error
 
 		case POSTFIX_ERROR_DIVIDE_BY_ZERO:
 		return "Division by zero!";
+
+		case POSTFIX_ERROR_UNKNOWN_OPERATOR:
+		return "Unknown operator encountered in expression.";
 
 		case POSTFIX_ERROR_INSUFFICIENT_OPERANDS:
 		return "An operator must come only after two operands (numbers)!";

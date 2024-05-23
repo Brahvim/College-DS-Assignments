@@ -16,6 +16,7 @@
         "stack.h": "c",
         "stackstatus.h": "c",
         "stdio.h": "c",
-        "typeinfo": "c"
+        "typeinfo": "c",
+        "postfixevaluator.h": "c"
     }
 }

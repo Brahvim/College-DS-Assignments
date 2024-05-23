@@ -6,7 +6,7 @@
 #include <string.h>
 #include <float.h>
 
-#include "Stack.h"
+#include "DoubleStack.h"
 
 #pragma region // `enum`s and their arrays.
 enum postfix_evaluator_error {
@@ -14,6 +14,8 @@ enum postfix_evaluator_error {
 	POSTFIX_ERROR_NONE,
 
 	POSTFIX_ERROR_DIVIDE_BY_ZERO,
+
+	POSTFIX_ERROR_UNKNOWN_OPERATOR,
 
 	POSTFIX_ERROR_INSUFFICIENT_OPERANDS,
 
@@ -36,6 +38,7 @@ enum postfix_evaluator_operation {
 static const enum postfix_evaluator_error g_postfix_evaluator_errors[] = {
 	POSTFIX_ERROR_NONE,
 	POSTFIX_ERROR_DIVIDE_BY_ZERO,
+	POSTFIX_ERROR_UNKNOWN_OPERATOR,
 	POSTFIX_ERROR_INSUFFICIENT_OPERANDS,
 };
 
@@ -61,8 +64,6 @@ struct postfix_evaluator_status_data {
 };
 
 typedef char expr_char_t;
-
-DECLARE_STACK_OF(double);
 
 // Program-specific stuff:
 struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *expr);
