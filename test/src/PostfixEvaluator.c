@@ -23,6 +23,7 @@ struct postfix_evaluator_status_data* postfix_evaluator_evaluate(expr_char_t *p_
 
 		if (ptr_to_char_after_num != expr_char_ptr) {
 			double_stack_push(operand_stack, num);
+			expr_char_ptr = ptr_to_char_after_num;
 		} else { // ...We may have some operand.
 			if (operand_stack->top < 2) { // Error!
 				to_ret->error_enum = POSTFIX_ERROR_INSUFFICIENT_OPERANDS;
