@@ -87,7 +87,7 @@ stack_status type##_stack_push(struct type##_stack *p_stack, const type p_elemen
 }                                                                                                   		\
                                                                                                     		\
 stack_status type##_stack_create(struct type##_stack **p_out_stack, size_t p_initial_allocation_size) {		\
-	struct type##_stack *stack = malloc(sizeof(struct type##_stack));  ;                        			\
+	struct type##_stack *stack = malloc(sizeof(struct type##_stack));  	                        			\
 	if (stack == NULL)																						\
 		return STACK_MALLOC;																				\
 																											\
