@@ -19,6 +19,19 @@ int main() {
 	tree->left = left;
 	tree->right = right;
 
+	// Pre-order traversal of our three-node tree ("root-left-right"!):
+
+#define PRINT_NODE_INFO(node) printf("`%zu`. [%p]: `%d`.\n", ++i, node, node->data = i); /* NOLINT(clang-diagnostic-unsequenced) */
+
+	size_t i = 0;
+	puts("Pre-order traversal:");
+
+	PRINT_NODE_INFO(tree);
+	PRINT_NODE_INFO(left);
+	PRINT_NODE_INFO(right);
+
+#undef PRINT_NODE_INFO
+
 	// Post-order traversal for tree deletion ("left-right-root"!):
 	free(left);
 	free(right);
